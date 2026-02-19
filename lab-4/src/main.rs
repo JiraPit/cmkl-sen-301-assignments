@@ -1,5 +1,5 @@
-mod int;
 mod float;
+mod int;
 
 use std::env;
 
