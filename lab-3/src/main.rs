@@ -55,8 +55,8 @@
 //     - We sort solutions by nonce and truncate to k at the end.
 
 use std::sync::{
-    atomic::{AtomicBool, AtomicU64, Ordering},
     Arc, Mutex,
+    atomic::{AtomicBool, AtomicU64, Ordering},
 };
 use std::thread;
 use std::time::Instant;
@@ -129,30 +129,31 @@ fn main() {
         handles.push(thread::spawn(move || {
             for nonce in lo..hi {
                 // ---------------------------------------
-                // TODO 1: Early stop check
-                // If stop is true, exit the loop so we don't waste work.
+                // 1: Early stop check
                 // ---------------------------------------
-                // TODO: implement
+                if stop.load(Ordering::Relaxed) {
+                    break;
+                }
 
                 let hash_hex = sha256_hex(&prefix, nonce);
 
                 // ---------------------------------------
-                // TODO 2: Count hashes
-                // Increment the shared hash counter for each nonce tested.
+                // 2: Count hashes
                 // ---------------------------------------
-                // TODO: implement
+                hashes.fetch_add(1, Ordering::Relaxed);
 
                 if meets_difficulty(&hash_hex, d) {
                     // ---------------------------------------
-                    // TODO 3: Publish solution safely
-                    // - Lock the results vector
-                    // - If results.len() < k, push the new solution
-                    // - If results.len() reaches k, set stop=true
-                    //
-                    // Important:
-                    // - Only lock when a solution is found (avoid locking per nonce).
+                    // 3: Publish solution safely
                     // ---------------------------------------
-                    // TODO: implement
+                    let mut res = results.lock().unwrap();
+
+                    if res.len() < k {
+                        res.push(Solution { nonce, hash_hex });
+                        if res.len() >= k {
+                            stop.store(true, Ordering::Relaxed);
+                        }
+                    }
                 }
             }
         }));
@@ -175,7 +176,11 @@ fn main() {
     // Performance stats
     let total_hashes = hashes.load(Ordering::Relaxed);
     let secs = elapsed.as_secs_f64();
-    let hashrate = if secs > 0.0 { (total_hashes as f64) / secs } else { 0.0 };
+    let hashrate = if secs > 0.0 {
+        (total_hashes as f64) / secs
+    } else {
+        0.0
+    };
 
     println!(
         "prefix={} threads={} difficulty={} target={}",
