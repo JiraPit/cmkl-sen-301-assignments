@@ -25,6 +25,8 @@ pub fn run() {
     unsafe {
         println!("Allocated value at p: 0x{:016X}", *p);
 
+        drop(Box::from_raw(p));
+
         let q: *mut u64 = Box::into_raw(Box::new(0x1111_2222_3333_4444));
         println!("Allocated a second Box at q: {:p}", q);
 
@@ -32,7 +34,6 @@ pub fn run() {
 
         println!("Read via dangling p after free: 0x{:016X}", leaked_read);
 
-        drop(Box::from_raw(p));
         drop(Box::from_raw(q));
     }
 }

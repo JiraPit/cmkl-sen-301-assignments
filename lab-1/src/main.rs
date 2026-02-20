@@ -1,7 +1,7 @@
-mod mem_layout;
-mod lifetime;
-mod bounds;
 mod aliasing;
+mod bounds;
+mod lifetime;
+mod mem_layout;
 mod type_confusion;
 
 fn usage() {

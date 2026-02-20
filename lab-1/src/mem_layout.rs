@@ -9,32 +9,31 @@ pub fn run() {
     println!("Main:\t {:p}", &y);
     test_fn_1();
 
-    // Heap 
+    // Heap
     let b_1 = Box::new([1; 100]);
     println!("Heap (box 1):\t {:p}", b_1);
 
-    // Heap 
+    // Heap
     let b_2 = Box::new([0; 100]);
     println!("Heap (box 2):\t {:p}", b_2);
 
     let l = vec![1, 2, 3, 4];
-    // Stack 
+    // Stack
     println!("List (struct):\t {:p}", &l);
-    // Heap 
+    // Heap
     println!("List (buffer)\t {:p}", &l[..]);
 
     // Heap overflow
     // zsh: killed     cargo run --bin main2
 
     //let l_too_large = vec![2u64; 1<<40];
-    
-    // Stack overflow 
+
+    // Stack overflow
     // thread 'main' (2069616) has overflowed its stack
     // fatal runtime error: stack overflow, aborting
     // zsh: abort      cargo run -- mem_layout
 
     //_test_recurse();
-
 }
 
 fn test_fn_1() {

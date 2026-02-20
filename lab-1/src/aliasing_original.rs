@@ -25,14 +25,11 @@ unsafe fn pow(src: *const u64, dst: *mut u64, p: u32) -> Result<(), PowError> {
     // Expected behavior after fixing:
     // - aliased call returns Err(PowError::AliasingNotAllowed)
     // - `same` remains unchanged
-    if std::ptr::eq(src, dst) {
-        return Err(PowError::AliasingNotAllowed);
-    }
 
     unsafe {
         *dst = 1;
         for _ in 0..p {
-            *dst *= *src;
+            *dst = *dst * *src;
         }
     }
 
@@ -50,7 +47,6 @@ pub fn run() {
     println!("(aliased): res={:?}, src={}", r_bad, src);
 
     // TODO: Add a correct call where src and dst are distinct, e.g., by allocating a new dst.
-    let mut dst: u64 = 0;
-    let r_good = unsafe { pow(&src as *const u64, &mut dst as *mut u64, p) };
-    println!("(distinct): res={:?}, src={}, dst={}", r_good, src, dst);
+    //let r_good = unsafe { pow(&src as *const u64, &mut dst as *mut u64, p) };
+    //println!("(distinct): res={:?}, src={}, dst={}", r_good, src, dst);
 }
