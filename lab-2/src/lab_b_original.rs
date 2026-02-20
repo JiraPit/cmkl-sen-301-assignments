@@ -11,6 +11,7 @@ use std::rc::Rc;
 /// Student tasks:
 /// B1) Implement mutation helper: set node value.
 /// B2) Implement "double borrow" demo using catch_unwind.
+
 pub fn run() {
     println!("\n== lab_b ==");
 
@@ -78,7 +79,7 @@ fn demo_mutate_in_scope_and_out_of_scope() {
 /// - Must use borrow_mut()
 /// - Must not keep the mutable borrow alive longer than necessary
 fn set_value(node: &NodeRef, new_value: &str) {
-    node.borrow_mut().value = new_value.to_string();
+    todo!("Implement set_value using borrow_mut()");
 }
 
 fn demo_double_mut_borrow_panics() {
@@ -109,14 +110,5 @@ fn demo_double_mut_borrow_panics() {
 /// - Use std::panic::catch_unwind(|| { ... })
 /// - You may need std::panic::AssertUnwindSafe because RefCell is not UnwindSafe by default.
 fn double_borrow_demo(node: &NodeRef) {
-    let result = std::panic::catch_unwind(std::panic::AssertUnwindSafe(|| {
-        let _b1 = node.borrow_mut();
-        let _b2 = node.borrow_mut();
-    }));
-
-    if result.is_err() {
-        println!("Caught double borrow panic!");
-    } else {
-        println!("No panic occurred.");
-    }
+    todo!("Implement double borrow demo with catch_unwind");
 }

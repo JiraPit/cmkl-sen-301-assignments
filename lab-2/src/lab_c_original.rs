@@ -14,6 +14,7 @@ use std::rc::{Rc, Weak};
 /// C1) Implement Node::next() and Node::prev().
 /// C2) Implement link(a, b): make a <-> b.
 /// C3) Demonstrate traversal forward and backward.
+
 pub fn run() {
     println!("\n== lab_c ==");
 
@@ -41,13 +42,13 @@ impl Node {
     /// STUDENT TODO C1:
     /// Return next node as Option<Rc<RefCell<Node>>> (clone the Rc).
     fn next(&self) -> Option<NodeRef> {
-        self.next.clone()
+        todo!("Implement next(): clone Rc handle from self.next");
     }
 
     /// STUDENT TODO C1:
     /// Return prev node as Option<Rc<RefCell<Node>>> by upgrading Weak.
     fn prev(&self) -> Option<NodeRef> {
-        self.prev.as_ref().and_then(|weak| weak.upgrade())
+        todo!("Implement prev(): upgrade Weak from self.prev");
     }
 }
 
@@ -62,8 +63,7 @@ impl Node {
 /// - Keep borrow_mut scopes short.
 /// - Do not hold two mutable borrows at the same time.
 fn link(a: &NodeRef, b: &NodeRef) {
-    a.borrow_mut().next = Some(b.clone());
-    b.borrow_mut().prev = Some(Rc::downgrade(a));
+    todo!("Implement link(a,b) with Rc and Weak");
 }
 
 fn demo_two_node_dll() {

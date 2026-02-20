@@ -10,6 +10,7 @@ use std::rc::Rc;
 /// Student tasks:
 /// A1) Implement Box mutation: change node B's value from "B" to "BB".
 /// A2) Implement Rc count demo: clone an Rc handle to node B and print refcounts.
+
 pub fn run() {
     println!("\n== lab_a ==");
 
@@ -66,9 +67,7 @@ fn format_box_chain(head: &BoxNode) -> String {
 /// STUDENT TODO A1:
 /// Mutate the second node's value.
 fn set_second_value_box(head: &mut BoxNode, new_value: &str) {
-    if let Some(second) = head.next.as_mut() {
-        second.value = new_value.to_string();
-    }
+    todo!("Implement Box mutation: set second node's value");
 }
 
 // ----------------------------
@@ -134,14 +133,5 @@ fn demo_rc_nodes_refcount_outlives_scope() {
 /// Return:
 /// - the cloned Rc handle
 fn clone_b_and_print_counts(node_b: &Rc<RcNode>) -> Rc<RcNode> {
-    println!(
-        "strong_count before cloning into external = {}",
-        Rc::strong_count(node_b)
-    );
-    let external = node_b.clone();
-    println!(
-        "strong_count after cloning into external = {}",
-        Rc::strong_count(node_b)
-    );
-    external
+    todo!("Implement Rc clone + strong_count prints");
 }
